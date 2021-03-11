@@ -1,4 +1,4 @@
-package com.progmasters.mypackage;
+package com.progmasters.quiz;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

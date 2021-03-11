@@ -1,4 +1,4 @@
-package com.progmasters.mypackage;
+package com.progmasters.quiz;
 
 import javax.annotation.Generated;
 import javax.xml.bind.annotation.*;
@@ -43,15 +43,15 @@ public class Answer extends Text {
     @Generated(value = "com.sun.tools.internal.xjc.Driver",
                date = "2021-03-11T06:00:19+01:00",
                comments = "JAXB RI v2.2.8-b130911.1802")
-    protected double fraction;
+    protected int fraction;
 
-    public Answer(String text, Text feedback, double fraction) {
+    public Answer(String text, Text feedback, int fraction) {
         super(text);
         this.feedback = feedback;
         this.fraction = fraction;
     }
 
-    public Answer(Text feedback, double fraction) {
+    public Answer(Text feedback, int fraction) {
         this.feedback = feedback;
         this.fraction = fraction;
     }
@@ -94,7 +94,7 @@ public class Answer extends Text {
     @Generated(value = "com.sun.tools.internal.xjc.Driver",
                date = "2021-03-11T06:00:19+01:00",
                comments = "JAXB RI v2.2.8-b130911.1802")
-    public double getFraction() {
+    public int getFraction() {
         return fraction;
     }
 
@@ -107,7 +107,7 @@ public class Answer extends Text {
     @Generated(value = "com.sun.tools.internal.xjc.Driver",
                date = "2021-03-11T06:00:19+01:00",
                comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setFraction(double value) {
+    public void setFraction(int value) {
         this.fraction = value;
     }
 

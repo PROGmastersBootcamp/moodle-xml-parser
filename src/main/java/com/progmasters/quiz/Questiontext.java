@@ -1,4 +1,4 @@
-package com.progmasters.mypackage;
+package com.progmasters.quiz;
 
 import javax.annotation.Generated;
 import javax.xml.bind.annotation.*;

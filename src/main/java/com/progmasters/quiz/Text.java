@@ -1,7 +1,10 @@
-package com.progmasters.mypackage;
+package com.progmasters.quiz;
+
+import com.progmasters.Adapter1;
 
 import javax.annotation.Generated;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * <p>Java class for text complex type.
@@ -38,6 +41,7 @@ public class Text {
     @Generated(value = "com.sun.tools.internal.xjc.Driver",
                date = "2021-03-11T06:00:19+01:00",
                comments = "JAXB RI v2.2.8-b130911.1802")
+    @XmlJavaTypeAdapter(Adapter1.class)
     public String text;
 
     public Text(String text) {

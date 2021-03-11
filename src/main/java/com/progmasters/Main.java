@@ -2,7 +2,8 @@ package com.progmasters;
 
 import com.progmasters.excel.ExcelLoader;
 import com.progmasters.excel.ExcelRow;
-import com.progmasters.mypackage.*;
+import com.progmasters.quiz.*;
+import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,12 +20,17 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
-        Quiz quiz = createQuiz(new ExcelLoader().loadData(150));
+        Quiz quiz = createQuiz(new ExcelLoader().loadData(65));
 
         JAXBContext jc = JAXBContext.newInstance(ObjectFactory.class);
-        Marshaller m = jc.createMarshaller();
+        Marshaller marshaller = jc.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
+
+        CdataCharacterEscapeHandler value = new CdataCharacterEscapeHandler();
+        marshaller.setProperty(CharacterEscapeHandler.class.getName(), value);
         OutputStream os = new FileOutputStream("questions.xml");
-        m.marshal(quiz, os);
+        marshaller.marshal(quiz, os);
     }
 
     public static Quiz createQuiz(List<ExcelRow> excelRows) {

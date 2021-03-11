@@ -70,22 +70,29 @@ public class ExcelLoader {
         return data;
     }
 
-    private Double getDoubleValue(Row row, int col) {
+    private int getDoubleValue(Row row, int col) {
         Cell cell = row.getCell(col);
         if (cell != null) {
-            return cell.getNumericCellValue();
+            return (int) cell.getNumericCellValue();
         } else {
-            return 0.0;
+            return 0;
         }
     }
 
     private String getStringCellValue(Row row, int col) {
-        Cell cell = row.getCell(col);
-        if (cell != null) {
-            return cell.getStringCellValue();
-        } else {
-            return "";
+        try {
+            Cell cell = row.getCell(col);
+            if (cell != null) {
+                return cell.getStringCellValue();
+            } else {
+                return "";
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("Current Row:" + row.getRowNum());
+            System.out.println("Current Cell:" + col);
+            e.printStackTrace();
         }
+        return "";
     }
 
 }
