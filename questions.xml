@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<quiz>
+    <category>
+        <text>default category</text>
+    </category>
+    <question type="multichoice">
+        <name>
+            <text>question name</text>
+        </name>
+        <questiontext format="plain_text">
+            <text>Mi a kérdés?</text>
+        </questiontext>
+        <tags>
+            <tag>
+                <text>CodeCool</text>
+            </tag>
+            <tag>
+                <text>Arch</text>
+            </tag>
+            <tag>
+                <text>Final</text>
+            </tag>
+        </tags>
+        <answer fraction="100">
+            <text>helyes válasz</text>
+        </answer>
+        <answer fraction="0">
+            <text>rossz válasz 1</text>
+        </answer>
+        <answer fraction="0">
+            <text>rossz válasz 2</text>
+        </answer>
+        <answer fraction="0">
+            <text>rossz válasz 3</text>
+        </answer>
+    </question>
+</quiz>

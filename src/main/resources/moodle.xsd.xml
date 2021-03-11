@@ -1,0 +1,29 @@
+<quiz>
+  <!--1 or more repetitions:-->
+  <question type="anySimpleType">
+    <!--Optional:-->
+    <name>
+      <text>string</text>
+    </name>
+    <questiontext format="anySimpleType">
+      <text>string</text>
+    </questiontext>
+    <!--Optional:-->
+    <tags>
+      <!--1 or more repetitions:-->
+      <tag>
+        <text>string</text>
+      </tag>
+    </tags>
+    <!--1 or more repetitions:-->
+    <answer fraction="100">
+      <text>string</text>
+      <feedback>
+        <text>string</text>
+      </feedback>
+    </answer>
+    <shuffleanswers>100</shuffleanswers>
+    <single>false</single>
+    <answernumbering>string</answernumbering>
+  </question>
+</quiz>

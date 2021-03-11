@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="quiz">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="category"/>
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="question"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="category">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="question">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="name"/>
+                <xs:element ref="questiontext"/>
+                <xs:element minOccurs="0" ref="tags"/>
+                <xs:element maxOccurs="unbounded" ref="answer"/>
+                <xs:sequence minOccurs="0">
+                    <xs:element ref="shuffleanswers"/>
+                    <xs:element ref="single"/>
+                    <xs:element ref="answernumbering"/>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:attribute name="type" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="name" type="text"/>
+    <xs:element name="questiontext">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="text">
+                    <xs:attribute name="format" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tags">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tag"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tag" type="text"/>
+    <xs:element name="answer">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="text">
+                    <xs:sequence>
+                        <xs:element ref="feedback"/>
+                    </xs:sequence>
+                    <xs:attribute name="fraction" use="required" type="xs:double"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="feedback" type="text"/>
+    <xs:element name="shuffleanswers" type="xs:integer"/>
+    <xs:element name="single" type="xs:boolean"/>
+    <xs:element name="answernumbering" type="xs:NCName"/>
+    <xs:complexType name="text">
+        <xs:sequence>
+            <xs:element ref="text"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="text" type="xs:string"/>
+</xs:schema>
