@@ -1,3 +1,5 @@
+JDK-8 kell, különben nem működik a JAXB
+
 Használat:
 
 - Excelt átírod az új adatokkal
