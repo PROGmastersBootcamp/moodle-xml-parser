@@ -1,6 +1,7 @@
 package com.progmasters.excel;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -82,14 +83,15 @@ public class ExcelLoader {
     private String getStringCellValue(Row row, int col) {
         try {
             Cell cell = row.getCell(col);
+
             if (cell != null) {
+                cell.setCellType(CellType.STRING);
                 return cell.getStringCellValue();
             } else {
                 return "";
             }
         } catch (IllegalStateException e) {
-            System.out.println("Current Row:" + row.getRowNum());
-            System.out.println("Current Cell:" + col);
+            System.out.println("Current Row:" + row.getRowNum() + "Current cell: " + col);
             e.printStackTrace();
         }
         return "";
