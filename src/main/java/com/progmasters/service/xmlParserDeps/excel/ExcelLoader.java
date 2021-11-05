@@ -1,10 +1,6 @@
-package com.progmasters.excel;
+package com.progmasters.service.xmlParserDeps.excel;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
@@ -18,34 +14,31 @@ import java.util.List;
 */
 public class ExcelLoader {
 
-    public static final String QUESTIONS_XLSX = "src/main/resources/questions.xlsx";
-
-    public List<ExcelRow> loadData(int rows) {
+    public List<ExcelRow> loadData(FileInputStream file) {
         try {
-            FileInputStream file = new FileInputStream(QUESTIONS_XLSX);
             Workbook workbook;
             workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
-            return iterateRows(sheet, rows);
+            return iterateRows(sheet);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    private List<ExcelRow> iterateRows(Sheet sheet, int rows) {
+    private List<ExcelRow> iterateRows(Sheet sheet) {
         List<ExcelRow> data = new ArrayList<>();
-        for (int i = 1; i < rows; i++) {
+        for (int i = 1; i < 230; i++) {
             Row row = sheet.getRow(i);
             if (row != null) {
                 int col = 0;
                 data.add(ExcelRow.builder()
-                                 .context(getStringCellValue(row, col))
-                                 .category(getStringCellValue(row, ++col))
-                                 .subCategory(getStringCellValue(row, ++col))
+                        .context(getStringCellValue(row, col))
+                        .category(getStringCellValue(row, ++col))
+                        .subCategory(getStringCellValue(row, ++col))
 
-                                 .questionTitle(getStringCellValue(row, ++col))
-                                 .questionType(getStringCellValue(row, ++col))
+                        .questionTitle(getStringCellValue(row, ++col))
+                        .questionType(getStringCellValue(row, ++col))
                                  .questionText(getStringCellValue(row, ++col))
                                  .questionTextType(getStringCellValue(row, ++col))
 

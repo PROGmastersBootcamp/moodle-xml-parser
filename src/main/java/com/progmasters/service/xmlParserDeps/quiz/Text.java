@@ -1,6 +1,6 @@
-package com.progmasters.quiz;
+package com.progmasters.service.xmlParserDeps.quiz;
 
-import com.progmasters.Adapter1;
+import com.progmasters.service.xmlParserDeps.Adapter1;
 
 import javax.annotation.Generated;
 import javax.xml.bind.annotation.*;
