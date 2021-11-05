@@ -1,4 +1,4 @@
-package com.progmasters;
+package com.progmasters.service.xmlParserDeps;
 
 public class CDataAdapter  {
  

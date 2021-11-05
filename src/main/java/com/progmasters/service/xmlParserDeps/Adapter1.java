@@ -1,4 +1,4 @@
-package com.progmasters;
+package com.progmasters.service.xmlParserDeps;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
