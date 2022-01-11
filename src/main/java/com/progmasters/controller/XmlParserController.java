@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @RestController
 public class XmlParserController {
@@ -24,13 +26,14 @@ public class XmlParserController {
     }
 
 
-    @PostMapping("/process")
-    public ResponseEntity<byte[]> convert(@RequestParam("file") @NotNull CommonsMultipartFile file) throws IOException, JAXBException {
-        byte[] result = xmlParser.process(file);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.valueOf("text/xml"))
-                .body(result);
+    @PostMapping(value = "/process", produces = "application/xml")
+    public void convert(@RequestParam("file") @NotNull CommonsMultipartFile file, HttpServletResponse response) throws IOException, JAXBException {
+        String currentDate = LocalDate.now().toString();
+        String resultFileName = file.getOriginalFilename() + "-" + currentDate + ".xml";
+        response.setContentType("application/xml");
+        response.setHeader("Content-Disposition", "attachment; filename=" + resultFileName);
+        xmlParser.process(file, response.getOutputStream());
+        response.flushBuffer();
     }
 
 

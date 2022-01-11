@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -19,6 +20,17 @@ import java.util.List;
 
 @Service
 public class XmlParser {
+
+    public void process(CommonsMultipartFile file, ServletOutputStream outputStream) throws IOException, JAXBException {
+        List<ExcelRow> excelRows = new ExcelLoader().loadData(file.getInputStream()); //TODO streamesíteni!
+        convertExcelRows(excelRows, outputStream);
+    }
+
+    private void convertExcelRows(List<ExcelRow> excelRows, OutputStream os) throws JAXBException, IOException {
+        Quiz quiz = createQuiz(excelRows);
+        createXmlFromData(quiz, os);
+    }
+
 
     public byte[] process(CommonsMultipartFile commonsMultipartFile) throws IOException, JAXBException {
         String sourceFilePath = System.getProperty("java.io.tmpdir") + '/' + commonsMultipartFile.getOriginalFilename();
@@ -37,6 +49,7 @@ public class XmlParser {
     public byte[] process(File file) throws JAXBException, IOException {
         return convertFile(file);
     }
+
 
     private byte[] convertFile(File fileToUpload) throws JAXBException, IOException {
         String currentDate = LocalDate.now().toString();
@@ -86,12 +99,24 @@ public class XmlParser {
 
     private Question questionBuilder(ExcelRow excelRow) {
 
-        ArrayList<Answer> answer = new ArrayList<>();
+        ArrayList<Answer> answers = new ArrayList<>();
 
-        answer.add(new Answer(excelRow.getAnswer1(), null, excelRow.getFraction1()));
-        answer.add(new Answer(excelRow.getAnswer2(), null, excelRow.getFraction2()));
-        answer.add(new Answer(excelRow.getAnswer3(), null, excelRow.getFraction3()));
-        answer.add(new Answer(excelRow.getAnswer4(), null, excelRow.getFraction4()));
+        answers.add(new Answer(excelRow.getAnswer1(), null, excelRow.getFraction1()));
+        if (excelRow.getAnswer2() != null && !excelRow.getAnswer2().isEmpty()) {
+            answers.add(new Answer(excelRow.getAnswer2(), null, excelRow.getFraction2()));
+        }
+        if (excelRow.getAnswer3() != null && !excelRow.getAnswer3().isEmpty()) {
+            answers.add(new Answer(excelRow.getAnswer3(), null, excelRow.getFraction3()));
+        }
+        if (excelRow.getAnswer4() != null && !excelRow.getAnswer4().isEmpty()) {
+            answers.add(new Answer(excelRow.getAnswer4(), null, excelRow.getFraction4()));
+        }
+        if (excelRow.getAnswer5() != null && !excelRow.getAnswer5().isEmpty()) {
+            answers.add(new Answer(excelRow.getAnswer5(), null, excelRow.getFraction5()));
+        }
+        if (excelRow.getAnswer6() != null && !excelRow.getAnswer6().isEmpty()) {
+            answers.add(new Answer(excelRow.getAnswer6(), null, excelRow.getFraction6()));
+        }
 
         ArrayList<Text> tags = new ArrayList<>();
 
@@ -111,7 +136,11 @@ public class XmlParser {
         if (tag4 != null && !tag4.isEmpty()) {
             tags.add(new Text(tag4));
         }
-
+        Boolean single = true;
+        if (excelRow.getQuestionSingle() != null && excelRow.getQuestionSingle().toLowerCase().equals("false")) {
+            single = false;
+        }
+        ;
         return Question.builder()
                 .name(new Text(excelRow.getQuestionTitle()))
                 .questiontext(Questiontext
@@ -119,10 +148,11 @@ public class XmlParser {
                         .format(excelRow.getQuestionTextType())
                         .text(excelRow.getQuestionText())
                         .build())
+                .single(single)
                 .tags(Tags.builder()
                         .tag(tags)
                         .build())
-                .answer(answer)
+                .answer(answers)
                 .type(excelRow.getQuestionType())
                 .build();
 
